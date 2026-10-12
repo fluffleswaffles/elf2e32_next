@@ -525,6 +525,8 @@ void RelocsProcessor::ProcessVerInfo()
 		Elf32_Verdaux* daux = ELF_ENTRY_PTR( Elf32_Verdaux, aDef, aDef->vd_aux);
 		aLinkAs = iElf->GetNameFromStringTable(daux->vda_name);
 		aSoName = iElf->SOName();
+		if(aDef->vd_ndx >= iVerInfo.size())
+			iVerInfo.resize(aDef->vd_ndx + 1);
 		iVerInfo[aDef->vd_ndx].iLinkAs = aLinkAs;
 		iVerInfo[aDef->vd_ndx].iSOName = aSoName;
 
@@ -540,6 +542,8 @@ void RelocsProcessor::ProcessVerInfo()
 		aLinkAs = iElf->GetNameFromStringTable(aNaux->vna_name);
 		aSoName = iElf->GetNameFromStringTable(aNeed->vn_file);
 
+		if(aNaux->vna_other >= iVerInfo.size())
+			iVerInfo.resize(aNaux->vna_other + 1);
 		iVerInfo[aNaux->vna_other].iLinkAs = aLinkAs;
 		iVerInfo[aNaux->vna_other].iSOName = aSoName;
 

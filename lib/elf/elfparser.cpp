@@ -478,7 +478,7 @@ uint32_t ElfParser::ExceptionDescriptor() const
     const char aExDescName[] = "Symbian$$CPP$$Exception$$Descriptor";
     Elf32_Sym* sym = LookupStaticSymbol(aExDescName);
     if(!sym)
-        ReportError(ErrorCodes::MISSEDEXCEPTIONDESCRIPTOR);
+        return 0;   // no descriptor: header slot 0 means "old binary / none"
 
     uint32_t symAddr = sym->st_value;
     uint32_t codeSegmentAddr = ROVirtualAddress();
